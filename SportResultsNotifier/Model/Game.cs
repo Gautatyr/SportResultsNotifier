@@ -5,8 +5,11 @@ public class Game
     public string TeamA;
     public string TeamB;
 
-    public Array TeamAScores;
-    public Array TeamBScores;
+    public string TeamAFinalScore;
+    public string TeamBFinalScore;
+
+    public List<string> TeamAScores;
+    public List<string> TeamBScores;
 
     public string Pts;
     public string Trb;
