@@ -70,7 +70,7 @@ public static class Scrapper
             });
         }
 
-        var testGame = games[4];
+        /*ar testGame = games[4];
         Console.WriteLine( testGame.TeamA );
         Console.WriteLine(testGame.TeamB);
         Console.WriteLine(testGame.TeamAFinalScore);
@@ -85,6 +85,8 @@ public static class Scrapper
         }
         Console.WriteLine(testGame.Pts);
         Console.WriteLine(testGame.Trb);
+*/
+        Console.WriteLine(games[0].GetGameAsMail());
 
     }
 }
