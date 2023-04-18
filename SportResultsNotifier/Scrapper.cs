@@ -11,11 +11,9 @@ public static class Scrapper
         HtmlWeb web = new();
         var htmlDoc = web.Load(WebsiteUrl);
 
-        var title = htmlDoc.DocumentNode.SelectSingleNode("//h1");
-        Console.WriteLine(title.InnerText); // for testing
+        var title = htmlDoc.DocumentNode.SelectSingleNode("//h1").InnerText;
 
-        var numberOfGames = htmlDoc.DocumentNode.SelectSingleNode("//h2");
-        Console.WriteLine(numberOfGames.InnerText);  // for testing
+        var numberOfGames = htmlDoc.DocumentNode.SelectSingleNode("//h2").InnerText;
 
         var gameSummaries = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='game_summaries']");
 
@@ -66,5 +64,22 @@ public static class Scrapper
                 Trb = ($"{trb.ChildNodes[1].InnerText} {trb.ChildNodes[3].InnerText} {trb.ChildNodes[5].InnerText}")
             });
         }
+
+        //Send mail
+        string subject = $"Basketball report {DateTime.Now.Date}";
+
+        string mailHeader = $"{title}\n{numberOfGames}:\n";
+
+        string mailMainBody = "";
+
+        foreach (var game in games)
+        {
+           mailMainBody = $"{mailMainBody}\n{game.GetGameAsMail()}\n";
+        }
+
+        string body = mailHeader + mailMainBody;
+
+        Mailer mailer = new();
+        mailer.SendEmail(subject, body);
     }
 }

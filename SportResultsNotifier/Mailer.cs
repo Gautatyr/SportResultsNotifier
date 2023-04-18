@@ -1,31 +1,29 @@
-﻿using System.Net.Mail;
+﻿using System.Configuration;
 using System.Net;
-using System.Configuration;
+using System.Net.Mail;
 
 namespace SportResultsNotifier;
 
 public class Mailer
 {
-    string smtpAddress = ConfigurationManager.AppSettings.Get("SmtpAddress");
-    int portNumber = int.Parse(ConfigurationManager.AppSettings.Get("PortNumber"));
-    bool enableSSL = true;
-    string senderAddress = ConfigurationManager.AppSettings.Get("SenderEmail");
-    string senderPassword = ConfigurationManager.AppSettings.Get("SenderPassword");
-    string receiverAdress = ConfigurationManager.AppSettings.Get("ReceiverEmail");
-    string subject = "Test";
-    string body = "This is a test";
+    private readonly string smtpAddress = ConfigurationManager.AppSettings.Get("SmtpAddress");
+    private readonly int portNumber = int.Parse(ConfigurationManager.AppSettings.Get("PortNumber"));
+    private readonly bool enableSSL = true;
+    private readonly string senderAddress = ConfigurationManager.AppSettings.Get("SenderEmail");
+    private readonly string senderPassword = ConfigurationManager.AppSettings.Get("SenderPassword");
+    private readonly string receiverAdress = ConfigurationManager.AppSettings.Get("ReceiverEmail");
 
-    public void SendEmail()
+    public void SendEmail(string subject, string body)
     {
         using MailMessage mail = new();
         mail.From = new MailAddress(senderAddress);
         mail.To.Add(receiverAdress);
         mail.Subject = subject;
         mail.Body = body;
-        mail.IsBodyHtml = true;
+        mail.IsBodyHtml = false;
 
         //mail.Attachments.Add(new Attachment("D:\\TestFile.txt"));
-        //--Uncomment this to send any attachment  
+        //--Uncomment this to send any attachment
 
         using SmtpClient smtp = new(smtpAddress, portNumber);
         smtp.Credentials = new NetworkCredential(senderAddress, senderPassword);

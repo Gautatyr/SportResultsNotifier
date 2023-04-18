@@ -21,8 +21,8 @@ public class Game
 {TeamA}: {TeamAFinalScore}
 {TeamB}: {TeamBFinalScore}
 
-{TeamA}: | Q1:{TeamAScores[0]} | Q2:{TeamAScores[1]} | Q3:{TeamAScores[2]} | Q4:{TeamAScores[3]} |
-{TeamB}: | Q1:{TeamBScores[0]} | Q2:{TeamBScores[1]} | Q3:{TeamBScores[2]} | Q4:{TeamBScores[3]} |
+{TeamA}: | {TeamAScores[0]} | {TeamAScores[1]} | {TeamAScores[2]} | {TeamAScores[3]} |
+{TeamB}: | {TeamBScores[0]} | {TeamBScores[1]} | {TeamBScores[2]} | {TeamBScores[3]} |
 
 {Pts}
 {Trb}
