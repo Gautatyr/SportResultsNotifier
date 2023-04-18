@@ -1,5 +1,5 @@
 ﻿using SportResultsNotifier;
 
-Scrapper.Init();
+Scrapper.ScrapNSendGames();
 
 Console.ReadLine();

@@ -5,16 +5,28 @@ namespace SportResultsNotifier;
 
 public static class Scrapper
 {
-    public static void Init()
+    public static void ScrapNSendGames()
     {
         const string WebsiteUrl = "https://www.basketball-reference.com/boxscores/";
         HtmlWeb web = new();
         var htmlDoc = web.Load(WebsiteUrl);
 
+        string subject = $"Basketball report {DateTime.Now.Date}";
+        string body = MailHeader(htmlDoc) + MailBody(htmlDoc);
+
+        Mailer mailer = new();
+        mailer.SendEmail(subject, body);
+    }
+
+    private static string MailHeader(HtmlDocument htmlDoc)
+    {
         var title = htmlDoc.DocumentNode.SelectSingleNode("//h1").InnerText;
-
         var numberOfGames = htmlDoc.DocumentNode.SelectSingleNode("//h2").InnerText;
+        return $"{title}\n{numberOfGames}:\n";
+    }
 
+    private static string MailBody(HtmlDocument htmlDoc)
+    {
         var gameSummaries = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='game_summaries']");
 
         //List des games
@@ -65,21 +77,13 @@ public static class Scrapper
             });
         }
 
-        //Send mail
-        string subject = $"Basketball report {DateTime.Now.Date}";
-
-        string mailHeader = $"{title}\n{numberOfGames}:\n";
-
         string mailMainBody = "";
 
         foreach (var game in games)
         {
-           mailMainBody = $"{mailMainBody}\n{game.GetGameAsMail()}\n";
+            mailMainBody = $"{mailMainBody}\n{game.GetGameAsMail()}\n";
         }
 
-        string body = mailHeader + mailMainBody;
-
-        Mailer mailer = new();
-        mailer.SendEmail(subject, body);
+        return mailMainBody;
     }
 }
