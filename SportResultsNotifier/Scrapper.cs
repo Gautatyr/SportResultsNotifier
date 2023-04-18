@@ -12,7 +12,7 @@ public static class Scrapper
         var htmlDoc = web.Load(WebsiteUrl);
 
         string subject = $"Basketball report {DateTime.Now.Date}";
-        string body = MailHeader(htmlDoc) + MailBody(htmlDoc);
+        string body = MailHeader(htmlDoc) + GamesOfTheDay(htmlDoc);
 
         Mailer mailer = new();
         mailer.SendEmail(subject, body);
@@ -22,14 +22,13 @@ public static class Scrapper
     {
         var title = htmlDoc.DocumentNode.SelectSingleNode("//h1").InnerText;
         var numberOfGames = htmlDoc.DocumentNode.SelectSingleNode("//h2").InnerText;
-        return $"{title}\n{numberOfGames}:\n";
+        return $"{title}\n{numberOfGames}:";
     }
 
-    private static string MailBody(HtmlDocument htmlDoc)
+    private static string GamesOfTheDay(HtmlDocument htmlDoc)
     {
         var gameSummaries = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='game_summaries']");
 
-        //List des games
         var individualSummaries = new List<HtmlNode>();
         for (int x = 1; x < gameSummaries.ChildNodes.Count; x += 2)
         {
@@ -72,8 +71,8 @@ public static class Scrapper
                 TeamAScores = teamAScores,
                 TeamBScores = teamBScores,
 
-                Pts = ($"{pts.ChildNodes[1].InnerText} {pts.ChildNodes[3].InnerText} {pts.ChildNodes[5].InnerText}"),
-                Trb = ($"{trb.ChildNodes[1].InnerText} {trb.ChildNodes[3].InnerText} {trb.ChildNodes[5].InnerText}")
+                Pts = ($"{pts.ChildNodes[3].InnerText} {pts.ChildNodes[5].InnerText}"),
+                Trb = ($"{trb.ChildNodes[3].InnerText} {trb.ChildNodes[5].InnerText}")
             });
         }
 
@@ -81,7 +80,7 @@ public static class Scrapper
 
         foreach (var game in games)
         {
-            mailMainBody = $"{mailMainBody}\n{game.GetGameAsMail()}\n";
+            mailMainBody = $"{mailMainBody}\n{game.GetGameAsMail()}";
         }
 
         return mailMainBody;

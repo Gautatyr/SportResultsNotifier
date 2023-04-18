@@ -18,14 +18,16 @@ public class Game
     {
         string mail =
             @$"
+------------------------------------------
 {TeamA}: {TeamAFinalScore}
 {TeamB}: {TeamBFinalScore}
 
 {TeamA}: | {TeamAScores[0]} | {TeamAScores[1]} | {TeamAScores[2]} | {TeamAScores[3]} |
 {TeamB}: | {TeamBScores[0]} | {TeamBScores[1]} | {TeamBScores[2]} | {TeamBScores[3]} |
 
-{Pts}
-{Trb}
+PTS:  {Pts}
+TRB:  {Trb}
+------------------------------------------
 ";
         return mail;
     }
