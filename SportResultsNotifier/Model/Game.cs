@@ -16,7 +16,7 @@ public class Game
 
     public string GetGameAsMail()
     {
-        string mail =
+        return
             @$"
 ------------------------------------------
 {TeamA}: {TeamAFinalScore}
@@ -29,6 +29,5 @@ PTS:  {Pts}
 TRB:  {Trb}
 ------------------------------------------
 ";
-        return mail;
     }
 }

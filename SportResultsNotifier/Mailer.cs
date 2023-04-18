@@ -22,9 +22,6 @@ public class Mailer
         mail.Body = body;
         mail.IsBodyHtml = false;
 
-        //mail.Attachments.Add(new Attachment("D:\\TestFile.txt"));
-        //--Uncomment this to send any attachment
-
         using SmtpClient smtp = new(smtpAddress, portNumber);
         smtp.Credentials = new NetworkCredential(senderAddress, senderPassword);
         smtp.EnableSsl = enableSSL;
