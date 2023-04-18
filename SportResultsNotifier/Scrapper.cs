@@ -1,6 +1,5 @@
 ﻿using HtmlAgilityPack;
 using SportResultsNotifier.Model;
-using System.Threading.Tasks.Sources;
 
 namespace SportResultsNotifier;
 
@@ -8,24 +7,23 @@ public static class Scrapper
 {
     public static void Init()
     {
-        const string html = "https://www.basketball-reference.com/boxscores/";
+        const string WebsiteUrl = "https://www.basketball-reference.com/boxscores/";
         HtmlWeb web = new();
-        var htmlDoc = web.Load(html);
+        var htmlDoc = web.Load(WebsiteUrl);
 
         var title = htmlDoc.DocumentNode.SelectSingleNode("//h1");
-        Console.WriteLine(title.InnerText);
+        Console.WriteLine(title.InnerText); // for testing
 
-        var nGames = htmlDoc.DocumentNode.SelectSingleNode("//h2");
-        Console.WriteLine(nGames.InnerText);
+        var numberOfGames = htmlDoc.DocumentNode.SelectSingleNode("//h2");
+        Console.WriteLine(numberOfGames.InnerText);  // for testing
 
-        var summaries = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='game_summaries']");
-
+        var gameSummaries = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='game_summaries']");
 
         //List des games
         var individualSummaries = new List<HtmlNode>();
-        for (int x = 1; x < summaries.ChildNodes.Count; x += 2)
+        for (int x = 1; x < gameSummaries.ChildNodes.Count; x += 2)
         {
-            individualSummaries.Add(summaries.ChildNodes[x]);
+            individualSummaries.Add(gameSummaries.ChildNodes[x]);
         }
 
         List<Game> games = new();
@@ -39,19 +37,19 @@ public static class Scrapper
             var pts = htmlDoc.DocumentNode.SelectSingleNode($"{table3.XPath}/tbody/tr[1]");
             var trb = htmlDoc.DocumentNode.SelectSingleNode($"{table3.XPath}/tbody/tr[2]");
 
-            var aScoresNodes = htmlDoc.DocumentNode.SelectNodes($"{table2.XPath}/tr[1]/td[@class='center']");
-            var bScoresNodes = htmlDoc.DocumentNode.SelectNodes($"{table2.XPath}/tr[2]/td[@class='center']");
+            var teamAScoreNodes = htmlDoc.DocumentNode.SelectNodes($"{table2.XPath}/tr[1]/td[@class='center']");
+            var teamBScoreNodes = htmlDoc.DocumentNode.SelectNodes($"{table2.XPath}/tr[2]/td[@class='center']");
 
-            List<string> aScores = new();
-            foreach (var score in aScoresNodes)
+            List<string> teamAScores = new();
+            foreach (var score in teamAScoreNodes)
             {
-                aScores.Add(score.InnerText);
+                teamAScores.Add(score.InnerText);
             }
 
-            List<string> bScores = new();
-            foreach (var score in bScoresNodes)
+            List<string> teamBScores = new();
+            foreach (var score in teamBScoreNodes)
             {
-                bScores.Add(score.InnerText);
+                teamBScores.Add(score.InnerText);
             }
 
             games.Add(new Game
@@ -61,32 +59,12 @@ public static class Scrapper
 
                 TeamB = table1.ChildNodes[3].ChildNodes[1].InnerText,
                 TeamBFinalScore = table1.ChildNodes[3].ChildNodes[3].InnerText,
-                TeamAScores = aScores,
-                TeamBScores = bScores,
-
+                TeamAScores = teamAScores,
+                TeamBScores = teamBScores,
 
                 Pts = ($"{pts.ChildNodes[1].InnerText} {pts.ChildNodes[3].InnerText} {pts.ChildNodes[5].InnerText}"),
                 Trb = ($"{trb.ChildNodes[1].InnerText} {trb.ChildNodes[3].InnerText} {trb.ChildNodes[5].InnerText}")
             });
         }
-
-        /*ar testGame = games[4];
-        Console.WriteLine( testGame.TeamA );
-        Console.WriteLine(testGame.TeamB);
-        Console.WriteLine(testGame.TeamAFinalScore);
-        Console.WriteLine(testGame.TeamBFinalScore);
-        foreach(var score in testGame.TeamAScores)
-        {
-            Console.Write(" "+ score + " ");
-        }
-        foreach (var score in testGame.TeamBScores)
-        {
-            Console.Write(" " + score + " ");
-        }
-        Console.WriteLine(testGame.Pts);
-        Console.WriteLine(testGame.Trb);
-*/
-        Console.WriteLine(games[0].GetGameAsMail());
-
     }
 }
