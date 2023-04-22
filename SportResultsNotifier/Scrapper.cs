@@ -3,9 +3,9 @@ using SportResultsNotifier.Model;
 
 namespace SportResultsNotifier;
 
-public static class Scrapper
+public class Scrapper
 {
-    public static void ScrapNSendGames()
+    public void ScrapNSendGames()
     {
         const string WebsiteUrl = "https://www.basketball-reference.com/boxscores/";
         HtmlWeb web = new();
@@ -18,14 +18,14 @@ public static class Scrapper
         mailer.SendEmail(subject, body);
     }
 
-    private static string MailHeader(HtmlDocument htmlDoc)
+    private string MailHeader(HtmlDocument htmlDoc)
     {
         var title = htmlDoc.DocumentNode.SelectSingleNode("//h1").InnerText;
         var numberOfGames = htmlDoc.DocumentNode.SelectSingleNode("//h2").InnerText;
         return $"{title}\n{numberOfGames}:";
     }
 
-    private static string GamesOfTheDay(HtmlDocument htmlDoc)
+    private string GamesOfTheDay(HtmlDocument htmlDoc)
     {
         var gameSummaries = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='game_summaries']");
 
