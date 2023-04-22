@@ -11,10 +11,12 @@ and sending the results of the day inside an email.
 - The application uses Agility Pack to scrap the data from the website
 
 # How to Use
-To use this application you will need to modify the mailer class:
-- Change the stmpAddress (ex: smtp.office365.com)
-- Change the port number (ex: 587 for office)
-- Change the sender and receiver email as you see fit, and the password for the sender
+To use this application you will need to create an App.Config file and set those variables:
+<add key="SenderEmail" value="SENDER S EMAIL" />
+<add key="SenderPassword" value="SENDER S EMAIL PASSWORD" />
+<add key="ReceiverEmail" value="RECEIVER S EMAIL" />
+<add key="SmtpAddress" value="smtp.office365.com" />
+<add key="PortNumber" value="587" />
 
 # Resources
 - Microsoft documentation
