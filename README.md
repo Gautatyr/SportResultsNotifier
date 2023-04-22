@@ -16,7 +16,7 @@ To use this application you will need to create an App.Config file and set those
 - key="SenderPassword" value="<Password of the email sending the mail>" 
 - key="ReceiverEmail" value="<Email receiver the mail>" 
   
-## These two are dependent of each other, these are my default
+These two are dependent of each other, these are my default:
 - key="SmtpAddress" value="smtp.office365.com" 
 - key="PortNumber" value="587" 
 
