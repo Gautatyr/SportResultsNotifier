@@ -10,6 +10,12 @@ and sending the results of the day inside an email.
 ## Web Scrapping
 - The application uses Agility Pack to scrap the data from the website
 
+# How to Use
+To use this application you will need to modify the mailer class:
+- Change the stmpAddress (ex: smtp.office365.com)
+- Change the port number (ex: 587 for office)
+- Change the sender and receiver email as you see fit, and the password for the sender
+
 # Resources
 - Microsoft documentation
 - [Agility Pack Doc](https://html-agility-pack.net/documentation)
