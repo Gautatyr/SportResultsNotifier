@@ -12,11 +12,11 @@ and sending the results of the day inside an email.
 
 # How to Use
 To use this application you will need to create an App.Config file and set those variables:
-<add key="SenderEmail" value="SENDER S EMAIL" />
-<add key="SenderPassword" value="SENDER S EMAIL PASSWORD" />
-<add key="ReceiverEmail" value="RECEIVER S EMAIL" />
-<add key="SmtpAddress" value="smtp.office365.com" />
-<add key="PortNumber" value="587" />
+- key="SenderEmail" value="SENDER S EMAIL"
+- key="SenderPassword" value="SENDER S EMAIL PASSWORD" 
+- key="ReceiverEmail" value="RECEIVER S EMAIL" 
+- key="SmtpAddress" value="smtp.office365.com" 
+- key="PortNumber" value="587" 
 
 # Resources
 - Microsoft documentation
